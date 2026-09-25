@@ -4,7 +4,7 @@ h1 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin: 
 h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 12px 0 6px; }
 .status { margin: 8px 0 0; padding: 6px 10px; border-radius: 8px; background: var(--surface); font-size: 13px; }
 .status.off { color: var(--danger); }
-.cats { list-style: none; margin: 0; padding: 0; max-height: 240px; overflow-y: auto; }
+.cats { list-style: none; margin: 0; padding: 0; max-height: 340px; overflow-y: auto; }
 .cats li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
 .cats li:last-child { border-bottom: 0; }
 .cats .name { flex: 1; min-width: 0; }

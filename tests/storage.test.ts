@@ -123,9 +123,9 @@ describe("config operations", () => {
     expect(quickBlock(off, "pics", "webcomics").categories.find((x) => x.id === "webcomics")!.enabled).toBe(true);
   });
   it("creates custom categories with unique ids and rejects duplicate names", () => {
-    const a = createCategory(createDefaultConfig(), "Celebrity gossip");
-    expect(a.id).toBe("custom-celebrity-gossip");
-    expect(() => createCategory(a.config, "celebrity GOSSIP")).toThrow(/already exists/);
+    const a = createCategory(createDefaultConfig(), "Cryptocurrency");
+    expect(a.id).toBe("custom-cryptocurrency");
+    expect(() => createCategory(a.config, "CRYPTOcurrency")).toThrow(/already exists/);
     expect(() => createCategory(a.config, "  ")).toThrow(RuleError);
   });
 });
@@ -203,5 +203,43 @@ describe("import / export", () => {
     // First category has no id, so it gets a slug of its name; the duplicate "A" id is renamed.
     expect(r.config.categories.map((c) => c.id)).toEqual(["a", "A", "A-2"]);
     expect(r.warnings.length).toBeGreaterThanOrEqual(4);
+  });
+});
+
+describe("optional built-in categories", () => {
+  const def = createDefaultConfig();
+  const optional = ["celebrity-gossip", "reality-tv", "snark", "streamers", "us-politics", "political-headlines", "rage-bait"];
+  const enable = (ids: string[]) => ({ ...def, categories: def.categories.map((c) => (ids.includes(c.id) ? { ...c, enabled: true } : c)) });
+
+  it("are all off by default", () => {
+    for (const id of optional) expect(def.categories.find((c) => c.id === id)?.enabled, id).toBe(false);
+    expect(evaluate({ subreddit: "politics", title: "" }, def).blocked).toBe(false);
+    expect(evaluate({ subreddit: "pics", title: "Trump at rally" }, def).blocked).toBe(false);
+  });
+
+  it("are added (still off) to an existing install without touching its categories", () => {
+    const old = { ...def, categories: def.categories.filter((c) => ["india", "webcomics"].includes(c.id)).map((c) => ({ ...c, name: c.name + " (mine)" })) };
+    const { config: merged, changed } = mergeSeedUpdates(old);
+    expect(changed).toBe(true);
+    expect(merged.categories.slice(0, 2).map((c) => c.name)).toEqual(old.categories.map((c) => c.name));
+    for (const id of optional) expect(merged.categories.find((c) => c.id === id)?.enabled, id).toBe(false);
+  });
+
+  it("snark pattern catches unlisted snark subs but not its known false positives", () => {
+    const c = enable(["snark"]);
+    expect(evaluate({ subreddit: "SomeNewInfluencerSnark", title: "" }, c).blocked).toBe(true);
+    for (const fp of ["SnarkyPuppy", "snarkyreplies", "snarkynurses"]) expect(evaluate({ subreddit: fp, title: "" }, c).blocked, fp).toBe(false);
+  });
+
+  it("political headlines match figures, not ambiguous words", () => {
+    const c = enable(["political-headlines"]);
+    const hit = (t: string) => evaluate({ subreddit: "pics", title: t }, c).blocked;
+    expect(hit("Trump signs executive order")).toBe(true);
+    expect(hit("AOC responds to Ocasio-Cortez critics")).toBe(true);
+    expect(hit("Senate passes bill")).toBe(true);
+    expect(hit("My neighbour Mr Harris built a treehouse")).toBe(false);
+    expect(hit("Class president election at my school")).toBe(false);
+    expect(hit("Ice on the lake this morning")).toBe(false);
+    expect(hit("Trumpet solo")).toBe(false);
   });
 });

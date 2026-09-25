@@ -1,10 +1,31 @@
 import { INDIA_PATTERNS_SEED, INDIA_SEED } from "../data/india";
 import type { SeedCategory } from "../data/seed-types";
 import { WEBCOMICS_SEED } from "../data/webcomics";
+import { CELEBRITY_SEED, REALITY_TV_SEED } from "../data/celebrity";
+import { SNARK_SEED } from "../data/snark";
+import { STREAMERS_SEED } from "../data/streamers";
+import { POLITICAL_HEADLINES_SEED, POLITICS_SEED } from "../data/politics";
+import { RAGEBAIT_SEED } from "../data/ragebait";
 import { dedupeCaseInsensitive } from "../filtering/normalization";
 import { CURRENT_SCHEMA_VERSION, type Category, type CategoryRules, type Config } from "./schema";
 
-export const SEEDS: readonly SeedCategory[] = [INDIA_SEED, INDIA_PATTERNS_SEED, WEBCOMICS_SEED];
+/**
+ * Built-in categories, in display order. Only India and Webcomics are on by
+ * default; the rest are opt-in. New seeds are added to existing installs
+ * (disabled, per their default) by mergeSeedUpdates.
+ */
+export const SEEDS: readonly SeedCategory[] = [
+  INDIA_SEED,
+  INDIA_PATTERNS_SEED,
+  WEBCOMICS_SEED,
+  CELEBRITY_SEED,
+  REALITY_TV_SEED,
+  SNARK_SEED,
+  STREAMERS_SEED,
+  POLITICS_SEED,
+  POLITICAL_HEADLINES_SEED,
+  RAGEBAIT_SEED,
+];
 
 const RULE_KINDS = ["subreddits", "patterns", "keywords"] as const;
 

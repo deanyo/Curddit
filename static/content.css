@@ -4,17 +4,20 @@
   display: none !important;
 }
 
-/* "Dim" mode: keep matched posts visible but faded, with the reason on top. */
+/* "Dim" mode: keep matched posts visible but faded, with the reason on top.
+   Only the post's children are faded so the label itself stays readable. */
 :root[data-rfc-mode="dim"] [data-rfc-hidden] {
-  opacity: 0.35 !important;
-  filter: grayscale(1) !important;
   outline: 2px dashed #d93a00 !important;
   outline-offset: -2px !important;
+}
+:root[data-rfc-mode="dim"] [data-rfc-hidden] > * {
+  opacity: 0.35 !important;
+  filter: grayscale(1) !important;
 }
 :root[data-rfc-mode="dim"] [data-rfc-hidden]::before {
   content: attr(data-rfc-label);
   display: block;
   font: 600 12px/1.6 system-ui, sans-serif;
-  color: #d93a00;
-  padding: 2px 8px;
+  color: #ff5a1f;
+  padding: 4px 10px 0;
 }

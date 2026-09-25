@@ -2,13 +2,22 @@
 
 A Firefox extension that removes unwanted posts from Reddit feeds by **category**, using exact subreddit names, wildcard name patterns and title keywords. Everything runs locally: there's no Reddit login, API access, backend, analytics or network requests.
 
-It ships with three built-in categories:
+It ships with these built-in categories. Only the first and third are on by default; switch the rest on from the popup:
 
 | Category | Default | What it matches |
 |---|---|---|
 | **India-specific communities** | on | 159 India-focused subreddits: regional, city and state communities, Bollywood and other film industries, celebrity gossip, memes, students, finance, lifestyle and gaming. It matches **subreddit identity only**, so an international news post about India in r/worldnews stays visible. |
 | **India: broad name patterns** | off | `India*`, `*India`, `Indian*`, with known false positives excluded (Indiana, Indianapolis, IndianCountry, Indian Motorcycle and others). Review it before switching it on. |
 | **Webcomics** | on | 54 webcomic and comic-strip subreddits (r/comics, r/webcomics, r/xkcd and others), plus phrase-level title keywords such as "comic strip", "webcomic" and "[OC] comic". |
+| **Celebrity gossip** | off | Fauxmoi, popculturechat, royal gossip and similar. It doesn't include fan communities or general entertainment news. |
+| **Reality TV** | off | Real Housewives, Bachelor, 90 Day Fiancé, Love Island and others. |
+| **Snark communities** | off | The pattern `*snark*` plus a list of snark subs without "snark" in the name. Known false positives (e.g. r/SnarkyPuppy, a jazz band) are excluded. |
+| **Streamers & influencer drama** | off | LivestreamFail, youtubedrama and major streamer communities. |
+| **US politics** | off | About 70 US political subreddits from left, right and centre, plus a few general subs that are political in practice (e.g. WhitePeopleTwitter). |
+| **Political headlines** | off | About 50 title keywords (politicians and institutions) that hide political posts in *any* subreddit. It's blunt by design. Ambiguous words like "Harris", "election" and "ICE" are left out. |
+| **Rage bait & freakouts** | off | PublicFreakout, TikTokCringe, fight and "Karen" subs, and similar. |
+
+Every subreddit name in these lists was checked against subreddit metadata. Dead or banned communities were dropped.
 
 You can add your own categories, such as celebrity gossip, politics or crypto.
 
@@ -119,7 +128,7 @@ Key decisions:
 
 ## Testing
 
-**Automated (`npm test`, 92 tests):**
+**Automated (`npm test`, 96 tests):**
 - Engine: case-insensitivity, normalisation, exact, wildcard and keyword matching, allowlist precedence, rule-type precedence, conflicting rules across categories, disabled categories, pause expiry, duplicate rules, pathological patterns, and a 20,000-rule performance check.
 - Storage: validation, import error messages, import/export round trips, v0→v1 migration, refusal of configs from newer versions, seed merging that respects user removals and deletions, and config operations.
 - DOM integration (jsdom, markup modelled on live Reddit): matching posts hidden and others visible, separators, ads, sidebar and crosspost handling, infinite-scroll insertion, late-arriving attributes, category disable restoring posts, allowlist, feed scope, client-side navigation, no double counting, and old.reddit.
