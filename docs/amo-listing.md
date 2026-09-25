@@ -7,7 +7,7 @@ The text for each field of the addons.mozilla.org submission form. Paste it as-i
 - **Name:** Feed Curator for Reddit
 - **Add-on URL slug:** feed-curator-for-reddit
 - **Summary** (max 250 characters):
-  > Hide whole categories of Reddit communities from your feeds: celebrity gossip, politics, snark, streamer drama, webcomics and more. Add your own rules by subreddit, name pattern or title keyword. Runs entirely in your browser.
+  > Hide whole categories of Reddit communities from your feeds: celebrity gossip, politics, snark, streamer drama, Tumblr, webcomics and more. Add your own rules by subreddit, name pattern or title keyword. Runs entirely in your browser.
 - **Categories:** Social & Communication; Privacy & Security (optional second)
 - **Tags:** reddit, filter, block, mute, feed, subreddit
 - **Licence:** GNU General Public License v3.0
@@ -28,6 +28,7 @@ Reddit only lets you mute communities one at a time. Feed Curator for Reddit let
 - US politics
 - Political headlines (by title keyword, in any subreddit)
 - Rage bait & freakouts
+- Tumblr
 - Webcomics
 - India-specific communities (plus an optional name-pattern variant)
 

@@ -56,9 +56,20 @@ const FINANCE_TECH_LIFESTYLE = [
   "india_tourism", "indianrailways", "IndianHistory", "IndianFestivals",
 ];
 
-/** Seen on the live India-geo Popular feed during testing (Sept 2026). */
+/**
+ * Seen on the live India-geo Popular feed (Sept 2026): a scan of ~330
+ * subreddits, classified by their descriptions plus manual review. Several
+ * (Indiedogs, TharCriminals, NoidaWale, Panvel, TMKOC) have no "India" in the
+ * name, so only an exact list catches them.
+ */
 const SEEN_LIVE = [
   "CriticalThinkingIndia", "splitsvillaMTV", "IndiaMemes", "JKreacts", "carIndia", "bollynewsandgossips",
+  // v2
+  "Indiedogs", "TharCriminals", "funnyIndia", "ps5india", "TMKOC", "Frugal_Ind", "IndiaBusiness",
+  "BollywoodHotTakes", "bollywoodgossips", "IndiaThriftCorner", "BangaloreSocial", "Bigbossmalayalam5",
+  "valorantindia", "TamilNaduDiscussion", "techIndia", "Hyd_DaTinG", "IndianCats", "sidehustleIndia",
+  "IndianFocus", "RealTeensIndia", "Indian_flex", "NoidaWale", "Panvel", "PataHaiAajKyaHua",
+  "IndiansinIreland",
 ];
 
 const SPORT_AND_GAMING = [
@@ -67,7 +78,7 @@ const SPORT_AND_GAMING = [
 
 export const INDIA_SEED: SeedCategory = {
   id: "india",
-  version: 1,
+  version: 2,
   name: "India-specific communities",
   description:
     "Regional, city and state communities plus Indian entertainment, gossip, memes, student, finance and lifestyle subreddits. Matches subreddits only, not post titles.",

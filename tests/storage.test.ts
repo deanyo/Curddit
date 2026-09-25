@@ -213,7 +213,7 @@ describe("import / export", () => {
 
 describe("optional built-in categories", () => {
   const def = createDefaultConfig();
-  const optional = ["celebrity-gossip", "reality-tv", "snark", "streamers", "us-politics", "political-headlines", "rage-bait"];
+  const optional = ["celebrity-gossip", "reality-tv", "snark", "streamers", "us-politics", "political-headlines", "rage-bait", "tumblr"];
   const enable = (ids: string[]) => ({ ...def, categories: def.categories.map((c) => (ids.includes(c.id) ? { ...c, enabled: true } : c)) });
 
   it("are all off by default", () => {
@@ -246,5 +246,21 @@ describe("optional built-in categories", () => {
     expect(hit("Class president election at my school")).toBe(false);
     expect(hit("Ice on the lake this morning")).toBe(false);
     expect(hit("Trumpet solo")).toBe(false);
+  });
+});
+
+describe("India seed v2 update", () => {
+  it("merges new subs into a v1 install, keeping removals and the user's on/off choice", () => {
+    let c = defaultsWith("india");
+    // Simulate an install made with seed v1: without the v2 additions, one v1 entry removed by the user.
+    c = { ...c, categories: c.categories.map((x) => (x.id === "india" ? { ...x, rules: { ...x.rules, subreddits: x.rules.subreddits.filter((s) => !["Indiedogs", "TharCriminals", "pune"].includes(s)) }, seed: { ...x.seed!, version: 1, removed: { subreddits: ["pune"], patterns: [], keywords: [] } } } : x)) };
+    const merged = mergeSeedUpdates(c).config;
+    const india = merged.categories.find((x) => x.id === "india")!;
+    expect(india.enabled).toBe(true);
+    expect(india.seed!.version).toBe(2);
+    expect(india.rules.subreddits).toContain("Indiedogs");
+    expect(india.rules.subreddits).toContain("TharCriminals");
+    expect(india.rules.subreddits).not.toContain("pune");
+    expect(evaluate({ subreddit: "Indiedogs", title: "" }, merged).blocked).toBe(true);
   });
 });

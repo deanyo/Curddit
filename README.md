@@ -16,8 +16,9 @@ It ships with ready-made categories, **all off until you pick them**. A welcome 
 | **US politics** | About 70 US political subreddits from left, right and centre, plus a few general subs that are political in practice (e.g. WhitePeopleTwitter). |
 | **Political headlines** | About 50 title keywords (politicians and institutions) that hide political posts in *any* subreddit. It's blunt by design. Ambiguous words like "Harris", "election" and "ICE" are left out. |
 | **Rage bait & freakouts** | PublicFreakout, TikTokCringe, fight and "Karen" subs, and similar. |
+| **Tumblr** | r/tumblr, r/CuratedTumblr and every other subreddit with "tumblr" in its name, plus posts with "tumblr" in the title. |
 | **Webcomics** | 54 webcomic and comic-strip subreddits (r/comics, r/webcomics, r/xkcd and others), plus phrase-level title keywords such as "comic strip" and "[OC] comic". |
-| **India-specific communities** | 159 India-focused subreddits: regional, city and state communities, film industries, gossip, memes, students, finance and lifestyle. It matches **subreddit identity only**, so an international news post about India in r/worldnews stays visible. |
+| **India-specific communities** | 185 India-focused subreddits, including ones without "India" in the name (e.g. r/Indiedogs) found by scanning the live India-geo Popular feed: regional, city and state communities, film industries, gossip, memes, students, finance and lifestyle. It matches **subreddit identity only**, so an international news post about India in r/worldnews stays visible. |
 | **India: broad name patterns** | `India*`, `*India`, `Indian*`, with known false positives excluded (Indiana, Indianapolis, IndianCountry, Indian Motorcycle and others). |
 
 Every subreddit name in these lists was checked against subreddit metadata. Dead or banned communities were dropped.
@@ -136,7 +137,7 @@ Key decisions:
 
 ## Testing
 
-**Automated (`npm test`, 97 tests):**
+**Automated (`npm test`, 98 tests):**
 - Engine: case-insensitivity, normalisation, exact, wildcard and keyword matching, allowlist precedence, rule-type precedence, conflicting rules across categories, disabled categories, pause expiry, duplicate rules, pathological patterns, and a 20,000-rule performance check.
 - Storage: validation, import error messages, import/export round trips, v0→v1 migration, refusal of configs from newer versions, seed merging that respects user removals and deletions, and config operations.
 - DOM integration (jsdom, markup modelled on live Reddit): matching posts hidden and others visible, separators, ads, sidebar and crosspost handling, infinite-scroll insertion, late-arriving attributes, category disable restoring posts, allowlist, feed scope, client-side navigation, no double counting, and old.reddit.

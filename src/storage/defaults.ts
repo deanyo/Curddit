@@ -6,6 +6,7 @@ import { SNARK_SEED } from "../data/snark";
 import { STREAMERS_SEED } from "../data/streamers";
 import { POLITICAL_HEADLINES_SEED, POLITICS_SEED } from "../data/politics";
 import { RAGEBAIT_SEED } from "../data/ragebait";
+import { TUMBLR_SEED } from "../data/tumblr";
 import { dedupeCaseInsensitive } from "../filtering/normalization";
 import { CURRENT_SCHEMA_VERSION, type Category, type CategoryRules, type Config } from "./schema";
 
@@ -22,6 +23,7 @@ export const SEEDS: readonly SeedCategory[] = [
   POLITICS_SEED,
   POLITICAL_HEADLINES_SEED,
   RAGEBAIT_SEED,
+  TUMBLR_SEED,
   WEBCOMICS_SEED,
   INDIA_SEED,
   INDIA_PATTERNS_SEED,
