@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reddit Feed Curator</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Reddit Feed Curator</h1>
+    <div id="master"></div>
+  </header>
+  <p id="status" class="status" role="status"></p>
+  <section>
+    <h2>Categories</h2>
+    <ul id="categories" class="cats"></ul>
+  </section>
+  <section class="stats">
+    <div><strong id="stat-session">0</strong><span>hidden this session</span></div>
+    <div><strong id="stat-lifetime">0</strong><span>hidden in total</span></div>
+    <div><strong id="stat-rules">0</strong><span>active rules</span></div>
+  </section>
+  <footer>
+    <button id="pause" type="button"></button>
+    <button id="reset-stats" type="button">Reset session stats</button>
+    <button id="settings" type="button" class="primary">Settings</button>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body { width: 340px; padding: 12px 14px; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+h1 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 12px 0 6px; }
+.status { margin: 8px 0 0; padding: 6px 10px; border-radius: 8px; background: var(--surface); font-size: 13px; }
+.status.off { color: var(--danger); }
+.cats { list-style: none; margin: 0; padding: 0; max-height: 240px; overflow-y: auto; }
+.cats li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.cats li:last-child { border-bottom: 0; }
+.cats .name { flex: 1; min-width: 0; }
+.cats .name div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cats .name small { color: var(--muted); font-size: 12px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+.stats div { background: var(--surface); border-radius: 8px; padding: 8px; text-align: center; }
+.stats strong { display: block; font-size: 18px; }
+.stats span { font-size: 11px; color: var(--muted); }
+footer { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+footer button { flex: 1; font-size: 12px; padding: 6px 8px; white-space: nowrap; }

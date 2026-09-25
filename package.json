@@ -1,0 +1,29 @@
+{
+  "name": "reddit-feed-curator",
+  "version": "1.0.0",
+  "description": "Firefox extension that filters unwanted Reddit feed posts by category, subreddit, pattern and keyword. Entirely local.",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:live": "node scripts/live-smoke.mjs",
+    "lint:ext": "web-ext lint --source-dir dist",
+    "package": "npm run build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --filename reddit-feed-curator-{version}.xpi --overwrite-dest",
+    "start:firefox": "web-ext run --source-dir dist --start-url https://www.reddit.com/r/popular/",
+    "check": "npm run typecheck && npm test && npm run build && npm run lint:ext"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^143.0.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^29.1.1",
+    "puppeteer-core": "^25.12.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "web-ext": "^10.7.0"
+  }
+}

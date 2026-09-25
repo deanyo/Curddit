@@ -1,0 +1,72 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f6f7f8;
+  --fg: #1a1a1b;
+  --muted: #5c6b73;
+  --border: #d7dadc;
+  --accent: #d93a00;
+  --accent-fg: #ffffff;
+  --focus: #0a66c2;
+  --chip: #eef1f3;
+  --danger: #b3261e;
+  --ok: #1b7f3b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121314;
+    --surface: #1c1d1f;
+    --fg: #e3e5e8;
+    --muted: #97a3aa;
+    --border: #34373a;
+    --accent: #ff6a33;
+    --accent-fg: #111;
+    --focus: #6aa8ff;
+    --chip: #26282b;
+    --danger: #ff8a80;
+    --ok: #6fd08c;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+button:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; }
+button.danger { color: var(--danger); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+input[type="text"], input[type="search"], select, textarea {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  min-width: 0;
+}
+.muted { color: var(--muted); }
+.switch { position: relative; display: inline-block; width: 36px; height: 20px; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.switch .slider {
+  position: absolute; inset: 0; background: var(--border); border-radius: 10px; transition: background .15s;
+}
+.switch .slider::before {
+  content: ""; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px;
+  background: #fff; border-radius: 50%; transition: transform .15s;
+}
+.switch input:checked + .slider { background: var(--accent); }
+.switch input:checked + .slider::before { transform: translateX(16px); }
+.switch input:focus-visible + .slider { outline: 2px solid var(--focus); outline-offset: 1px; }

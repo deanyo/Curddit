@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reddit Feed Curator Settings</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Reddit Feed Curator</h1>
+    <nav>
+      <a href="#general">General</a>
+      <a href="#categories">Categories</a>
+      <a href="#allowlist">Allowlist</a>
+      <a href="#tester">Rule tester</a>
+      <a href="#backup">Import / export</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <section id="general" class="card">
+      <h2>General</h2>
+      <div id="general-body"></div>
+    </section>
+
+    <section id="categories" class="card">
+      <h2>Categories</h2>
+      <details class="help">
+        <summary>How the rule types differ</summary>
+        <dl>
+          <dt>Exact subreddits</dt>
+          <dd>Hide every feed post from that community. Case doesn't matter, and <code>r/TeenIndia</code>, <code>/r/TeenIndia</code> and <code>TeenIndia</code> are the same. This is the most precise rule type.</dd>
+          <dt>Wildcard patterns</dt>
+          <dd>Match subreddit <em>names</em>. <code>*</code> means “any characters” and <code>?</code> means “one character”: <code>*India</code> matches names ending in “India”, <code>India*</code> names starting with it. They're powerful but broad, so check them with the rule tester and use exclusions to carve out false positives.</dd>
+          <dt>Title keywords</dt>
+          <dd>Match whole words or phrases in post <em>titles</em>, in any subreddit. <code>art</code> won't match “party”. Add a trailing <code>*</code> to match word beginnings (<code>comic*</code> matches “comics”).</dd>
+          <dt>Exclusions</dt>
+          <dd>Subreddits (or patterns) this category should never hide, even if one of its rules matches. The global allowlist below overrides every category.</dd>
+        </dl>
+        <p>Rules are checked in this order: allowlist, then exact subreddits, then patterns, then keywords. The first match wins. Single-subreddit pages and comment pages are never filtered, so you can always visit a blocked community directly.</p>
+      </details>
+      <div class="global-search">
+        <input id="global-search" type="search" placeholder="Search all rules (e.g. a subreddit name)…" aria-label="Search all rules">
+        <div id="global-results"></div>
+      </div>
+      <div class="cat-layout">
+        <aside>
+          <ul id="cat-list" class="cat-list"></ul>
+          <form id="new-cat" class="new-cat">
+            <input id="new-cat-name" type="text" placeholder="New category name" maxlength="100" aria-label="New category name">
+            <button type="submit">Add</button>
+          </form>
+        </aside>
+        <div id="cat-editor" class="cat-editor"></div>
+      </div>
+    </section>
+
+    <section id="allowlist" class="card">
+      <h2>Allowlist</h2>
+      <p class="muted">Subreddits here are never hidden, whatever category rules say.</p>
+      <div id="allowlist-body"></div>
+    </section>
+
+    <section id="tester" class="card">
+      <h2>Rule tester</h2>
+      <p class="muted">See which rule, if any, would hide a post. It uses your current settings: disabled categories are skipped and the allowlist applies. Feed scope is not considered here.</p>
+      <div class="tester-grid">
+        <label>Subreddit <input id="test-sub" type="text" placeholder="e.g. r/TeenIndia"></label>
+        <label>Post title <input id="test-title" type="text" placeholder="e.g. A comic strip I drew"></label>
+      </div>
+      <p id="test-result" class="test-result" role="status"></p>
+    </section>
+
+    <section id="backup" class="card">
+      <h2>Import / export</h2>
+      <p class="muted">Export saves all categories, rules and settings as JSON. Import replaces your current settings after you confirm.</p>
+      <div class="row">
+        <button id="export" type="button">Export to file</button>
+        <label class="file-btn"><input id="import-file" type="file" accept="application/json,.json"> Import from file…</label>
+        <button id="reset" type="button" class="danger">Reset to defaults</button>
+      </div>
+      <details>
+        <summary>Or paste JSON</summary>
+        <textarea id="import-text" rows="8" spellcheck="false" placeholder='{"schemaVersion": 1, "categories": [...]}'></textarea>
+        <button id="import-paste" type="button">Validate &amp; import</button>
+      </details>
+      <div id="import-report" class="import-report"></div>
+    </section>
+
+    <p class="muted foot">Everything is stored in this browser only. The extension makes no network requests, collects no browsing data, and never changes your Reddit account settings.</p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
