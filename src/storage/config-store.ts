@@ -21,7 +21,7 @@ export async function loadConfig(): Promise<Config> {
   }
   const result = validateConfig(raw);
   if (!result.ok) {
-    console.warn("[Reddit Feed Curator] Stored configuration invalid, using defaults:", result.errors);
+    console.warn("[Feed Curator for Reddit] Stored configuration invalid, using defaults:", result.errors);
     const fresh = createDefaultConfig();
     await browser.storage.local.set({ [BACKUP_KEY]: raw, [CONFIG_KEY]: fresh });
     return fresh;

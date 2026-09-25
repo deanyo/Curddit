@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { FeedFilter, HIDDEN_ATTR } from "../src/content/feed-observer";
-import { createDefaultConfig } from "../src/storage/defaults";
+import { defaultsWith } from "./helpers";
 import type { Config } from "../src/storage/schema";
 import type { HiddenPostReport } from "../src/shared/messages";
 import { oldRedditThing, shredditAd, shredditPage, shredditPost } from "./fixtures/markup";
@@ -18,7 +18,7 @@ function article(id: string): Element {
 function isHidden(id: string): boolean {
   return article(id).hasAttribute(HIDDEN_ATTR);
 }
-function start(config: Config = createDefaultConfig()): FeedFilter {
+function start(config: Config = defaultsWith("india", "webcomics")): FeedFilter {
   filter = new FeedFilter({ getHref: () => href, onHidden: (items) => reports.push(...items), reportDelayMs: 0 });
   filter.setConfig(config);
   filter.start();
@@ -93,7 +93,7 @@ describe("current Reddit frontend", () => {
   it("disabling a category restores its hidden posts immediately", () => {
     const f = start();
     expect(isHidden("a1")).toBe(true);
-    f.setConfig(withCategory(createDefaultConfig(), "india", false));
+    f.setConfig(withCategory(defaultsWith("india", "webcomics"), "india", false));
     expect(isHidden("a1")).toBe(false);
     expect(article("a1").nextElementSibling!.hasAttribute("data-rfc-hidden-sep")).toBe(false);
     expect(isHidden("c3")).toBe(true);
@@ -101,9 +101,9 @@ describe("current Reddit frontend", () => {
 
   it("master switch and allowlist restore posts", () => {
     const f = start();
-    f.setConfig({ ...createDefaultConfig(), enabled: false });
+    f.setConfig({ ...defaultsWith("india", "webcomics"), enabled: false });
     expect(isHidden("a1") || isHidden("c3")).toBe(false);
-    f.setConfig({ ...createDefaultConfig(), allowlist: ["TeenIndia"] });
+    f.setConfig({ ...defaultsWith("india", "webcomics"), allowlist: ["TeenIndia"] });
     expect(isHidden("a1")).toBe(false);
     expect(isHidden("c3")).toBe(true);
   });
@@ -112,15 +112,15 @@ describe("current Reddit frontend", () => {
     href = "https://www.reddit.com/r/all/";
     const f = start();
     expect(isHidden("a1")).toBe(false); // default scope is Popular only
-    f.setConfig({ ...createDefaultConfig(), scope: "popular_all" });
+    f.setConfig({ ...defaultsWith("india", "webcomics"), scope: "popular_all" });
     expect(isHidden("a1")).toBe(true);
-    f.setConfig({ ...createDefaultConfig(), scope: "popular" });
+    f.setConfig({ ...defaultsWith("india", "webcomics"), scope: "popular" });
     expect(isHidden("a1")).toBe(false);
   });
 
   it("does not filter when visiting a blocked subreddit directly", () => {
     href = "https://www.reddit.com/r/TeenIndia/";
-    start({ ...createDefaultConfig(), scope: "all_feeds" });
+    start({ ...defaultsWith("india", "webcomics"), scope: "all_feeds" });
     expect(isHidden("a1")).toBe(false);
   });
 
@@ -145,9 +145,9 @@ describe("current Reddit frontend", () => {
     const initial = reports.length;
     expect(initial).toBe(2); // a1 (india) + c3 (webcomics)
     f.reevaluateAll();
-    f.setConfig(createDefaultConfig());
-    f.setConfig(withCategory(createDefaultConfig(), "india", false));
-    f.setConfig(createDefaultConfig());
+    f.setConfig(defaultsWith("india", "webcomics"));
+    f.setConfig(withCategory(defaultsWith("india", "webcomics"), "india", false));
+    f.setConfig(defaultsWith("india", "webcomics"));
     // Same post re-rendered as a new element (e.g. Reddit re-mounting the feed).
     const clone = article("a1").cloneNode(true) as Element;
     article("a1").replaceWith(clone);

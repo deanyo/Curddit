@@ -13,7 +13,7 @@ export const WEBCOMICS_SEED: SeedCategory = {
   version: 1,
   name: "Webcomics",
   description: "Webcomic and comic-strip communities, plus comic-style post titles in general subreddits.",
-  enabledByDefault: true,
+  enabledByDefault: false,
   rules: {
     subreddits: [
       "comics", "webcomics", "WebComic", "xkcd", "webtoons", "webtoon", "ComicStrips",

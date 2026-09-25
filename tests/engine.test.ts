@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { compileRules, describeMatch, evaluate, evaluatePost } from "../src/filtering/engine";
 import { createDefaultConfig } from "../src/storage/defaults";
-import { cat, config } from "./helpers";
+import { cat, config, defaultsWith } from "./helpers";
 
 const india = cat({ id: "india", name: "India", rules: { subreddits: ["TeenIndia", "SnacksIndia"], patterns: [], keywords: [] } });
 
@@ -33,8 +33,9 @@ describe("exact subreddit matching", () => {
   });
 
   it("does not block an India news post in a general subreddit (subreddit identity only)", () => {
-    const d = evaluate({ subreddit: "worldnews", title: "India launches new satellite" }, createDefaultConfig());
-    expect(d.blocked).toBe(false);
+    const c = defaultsWith("india", "india-patterns");
+    expect(evaluate({ subreddit: "worldnews", title: "India launches new satellite" }, c).blocked).toBe(false);
+    expect(evaluate({ subreddit: "TeenIndia", title: "x" }, c).blocked).toBe(true);
   });
 });
 

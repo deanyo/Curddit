@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reddit Feed Curator Settings</title>
+  <title>Feed Curator for Reddit Settings</title>
   <link rel="stylesheet" href="../shared/ui.css">
   <link rel="stylesheet" href="options.css">
 </head>
 <body>
   <header class="top">
-    <h1>Reddit Feed Curator</h1>
+    <h1>Feed Curator for Reddit</h1>
     <nav>
       <a href="#general">General</a>
       <a href="#categories">Categories</a>
@@ -33,9 +33,9 @@
         <summary>How the rule types differ</summary>
         <dl>
           <dt>Exact subreddits</dt>
-          <dd>Hide every feed post from that community. Case doesn't matter, and <code>r/TeenIndia</code>, <code>/r/TeenIndia</code> and <code>TeenIndia</code> are the same. This is the most precise rule type.</dd>
+          <dd>Hide every feed post from that community. Case doesn't matter, and <code>r/Fauxmoi</code>, <code>/r/Fauxmoi</code> and <code>Fauxmoi</code> are the same. This is the most precise rule type.</dd>
           <dt>Wildcard patterns</dt>
-          <dd>Match subreddit <em>names</em>. <code>*</code> means “any characters” and <code>?</code> means “one character”: <code>*India</code> matches names ending in “India”, <code>India*</code> names starting with it. They're powerful but broad, so check them with the rule tester and use exclusions to carve out false positives.</dd>
+          <dd>Match subreddit <em>names</em>. <code>*</code> means “any characters” and <code>?</code> means “one character”: <code>*snark*</code> matches any name containing “snark”, <code>News*</code> names starting with “News”. They're powerful but broad, so check them with the rule tester and use exclusions to carve out false positives.</dd>
           <dt>Title keywords</dt>
           <dd>Match whole words or phrases in post <em>titles</em>, in any subreddit. <code>art</code> won't match “party”. Add a trailing <code>*</code> to match word beginnings (<code>comic*</code> matches “comics”).</dd>
           <dt>Exclusions</dt>
@@ -69,7 +69,7 @@
       <h2>Rule tester</h2>
       <p class="muted">See which rule, if any, would hide a post. It uses your current settings: disabled categories are skipped and the allowlist applies. Feed scope is not considered here.</p>
       <div class="tester-grid">
-        <label>Subreddit <input id="test-sub" type="text" placeholder="e.g. r/TeenIndia"></label>
+        <label>Subreddit <input id="test-sub" type="text" placeholder="e.g. r/Fauxmoi"></label>
         <label>Post title <input id="test-title" type="text" placeholder="e.g. A comic strip I drew"></label>
       </div>
       <p id="test-result" class="test-result" role="status"></p>
@@ -92,6 +92,7 @@
     </section>
 
     <p class="muted foot">Everything is stored in this browser only. The extension makes no network requests, collects no browsing data, and never changes your Reddit account settings.</p>
+    <p class="muted foot">Free and open source under GPL-3.0 · <a href="https://github.com/deanyo/Curddit" target="_blank" rel="noopener noreferrer">Source code</a> · <a href="https://buymeacoffee.com/deanyo" target="_blank" rel="noopener noreferrer">Buy me a coffee</a></p>
   </main>
   <script src="options.js"></script>
 </body>

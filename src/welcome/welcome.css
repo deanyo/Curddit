@@ -1,0 +1,23 @@
+body { background: var(--surface); }
+main { max-width: 720px; margin: 0 auto; padding: 32px 16px 48px; }
+header { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; }
+header h1 { margin: 0; font-size: 24px; }
+header p { margin: 4px 0 0; }
+section { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; }
+h2 { font-size: 16px; margin: 0 0 6px; }
+.cats { list-style: none; margin: 12px 0 0; padding: 0; }
+.cats li { display: flex; gap: 14px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.cats li:first-child { border-top: 0; }
+.cats .text { flex: 1; min-width: 0; }
+.cats .text strong { display: block; }
+.cats .text span { display: block; color: var(--muted); font-size: 13px; }
+.cats .text small { color: var(--muted); font-size: 12px; }
+#scope label { display: flex; gap: 8px; align-items: baseline; padding: 3px 0; }
+.tips ul { margin: 6px 0 0; padding-left: 20px; }
+.tips li { margin: 4px 0; }
+code { background: var(--chip); border-radius: 4px; padding: 0 4px; }
+footer { display: flex; gap: 8px; justify-content: flex-end; }
+a.button { display: inline-block; text-decoration: none; border-radius: 8px; padding: 6px 12px; border: 1px solid var(--accent); }
+a.button.primary { background: var(--accent); color: var(--accent-fg); font-weight: 600; }
+.coffee { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
+.coffee a { color: inherit; }

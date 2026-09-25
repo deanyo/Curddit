@@ -11,6 +11,7 @@ const entryPoints = {
   content: "src/content/index.ts",
   "popup/popup": "src/popup/popup.ts",
   "options/options": "src/options/options.ts",
+  "welcome/welcome": "src/welcome/welcome.ts",
 };
 
 const options = {
@@ -26,7 +27,7 @@ const options = {
 
 async function copyStatic() {
   await cp("static", outdir, { recursive: true });
-  for (const page of ["popup", "options"]) {
+  for (const page of ["popup", "options", "welcome"]) {
     await mkdir(`${outdir}/${page}`, { recursive: true });
     await cp(`src/${page}/${page}.html`, `${outdir}/${page}/${page}.html`);
     await cp(`src/${page}/${page}.css`, `${outdir}/${page}/${page}.css`);

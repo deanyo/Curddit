@@ -71,7 +71,7 @@ export const INDIA_SEED: SeedCategory = {
   name: "India-specific communities",
   description:
     "Regional, city and state communities plus Indian entertainment, gossip, memes, student, finance and lifestyle subreddits. Matches subreddits only, not post titles.",
-  enabledByDefault: true,
+  enabledByDefault: false,
   rules: {
     subreddits: [
       ...USER_MUTED,
@@ -100,7 +100,7 @@ export const INDIA_PATTERNS_SEED: SeedCategory = {
   version: 1,
   name: "India: broad name patterns",
   description:
-    "Catches any subreddit whose name starts or ends with India/Indian. Off by default because of false positives; known ones (Indiana, IndianCountry, etc.) are excluded.",
+    "Catches any subreddit whose name starts or ends with India/Indian, including new ones not on the list. Broader, so review before enabling; known false positives (Indiana, IndianCountry, etc.) are excluded.",
   enabledByDefault: false,
   rules: {
     subreddits: [],

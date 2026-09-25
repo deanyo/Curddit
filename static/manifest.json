@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Reddit Feed Curator",
+  "name": "Feed Curator for Reddit",
   "version": "1.0.0",
   "description": "Filter unwanted posts out of Reddit feeds by category, subreddit, name pattern or title keyword. Runs entirely locally.",
   "icons": {
@@ -12,7 +12,7 @@
     "scripts": ["background.js"]
   },
   "action": {
-    "default_title": "Reddit Feed Curator",
+    "default_title": "Feed Curator for Reddit",
     "default_popup": "popup/popup.html",
     "default_icon": "icons/icon.svg"
   },

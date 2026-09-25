@@ -202,14 +202,14 @@ const PANELS: { kind: ListKind; title: string; hint: string; placeholder: string
     kind: "subreddits",
     title: "Exact subreddits",
     hint: "Hide every feed post from these communities. You can paste several at once, separated by commas, spaces or new lines.",
-    placeholder: "e.g. r/TeenIndia, bollywood",
+    placeholder: "e.g. r/Fauxmoi, popculturechat",
     split: /[\s,]+/,
   },
   {
     kind: "patterns",
     title: "Wildcard patterns",
-    hint: "Match subreddit names. * = any characters, ? = one character. Example: *India matches names ending in “India”.",
-    placeholder: "e.g. *India",
+    hint: "Match subreddit names. * = any characters, ? = one character. Example: *snark* matches any name containing “snark”.",
+    placeholder: "e.g. *snark*",
     split: /[\s,]+/,
   },
   {
@@ -223,7 +223,7 @@ const PANELS: { kind: ListKind; title: string; hint: string; placeholder: string
     kind: "exclusions",
     title: "Exclusions",
     hint: "Subreddits (or patterns) this category should never hide, even when a rule above matches.",
-    placeholder: "e.g. Indiana*",
+    placeholder: "e.g. SnarkyPuppy",
     split: /[\s,]+/,
   },
 ];
@@ -379,7 +379,7 @@ function renderAllowlist(): void {
   const input = h("input", {
     type: "text",
     value: drafts.get(key) ?? "",
-    placeholder: "e.g. r/IndiaSpeaks",
+    placeholder: "e.g. r/AskReddit",
     attrs: { "aria-label": "Add subreddit to allowlist", "data-key": "allowlist:add" },
     on: { input: () => drafts.set(key, input.value) },
   });

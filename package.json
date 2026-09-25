@@ -1,9 +1,9 @@
 {
-  "name": "reddit-feed-curator",
-  "version": "1.0.0",
-  "description": "Firefox extension that filters unwanted Reddit feed posts by category, subreddit, pattern and keyword. Entirely local.",
+  "name": "feed-curator-for-reddit",
+  "version": "1.1.0",
+  "description": "Firefox extension that filters unwanted posts out of Reddit feeds by category, subreddit, pattern and keyword. Entirely local.",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -13,9 +13,10 @@
     "test:watch": "vitest",
     "test:live": "node scripts/live-smoke.mjs",
     "lint:ext": "web-ext lint --source-dir dist",
-    "package": "npm run build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --filename reddit-feed-curator-{version}.xpi --overwrite-dest",
+    "package": "npm run build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --filename feed-curator-for-reddit-{version}.xpi --overwrite-dest",
     "start:firefox": "web-ext run --source-dir dist --start-url https://www.reddit.com/r/popular/",
-    "check": "npm run typecheck && npm test && npm run build && npm run lint:ext"
+    "check": "npm run typecheck && npm test && npm run build && npm run lint:ext",
+    "package:source": "mkdir -p web-ext-artifacts && git archive --format=zip -o web-ext-artifacts/feed-curator-for-reddit-source.zip HEAD"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^143.0.0",
@@ -25,5 +26,9 @@
     "typescript": "^7.0.2",
     "vitest": "^4.1.11",
     "web-ext": "^10.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deanyo/Curddit.git"
   }
 }

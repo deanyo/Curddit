@@ -25,6 +25,8 @@ function render(): void {
   else if (isPaused(config)) {
     const t = new Date(config.pausedUntil!).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     status.textContent = `Paused until ${t}.`;
+  } else if (!config.categories.some((c) => c.enabled)) {
+    status.textContent = "No categories switched on yet. Turn some on below.";
   } else status.textContent = `Filtering: ${SCOPE_LABELS[config.scope]}.`;
 
   const list = byId("categories");

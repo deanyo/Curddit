@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Feed Curator for Reddit</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../icons/icon.svg" alt="" width="56" height="56">
+      <div>
+        <h1>Feed Curator for Reddit</h1>
+        <p class="muted">Hide the communities and topics you don't want in your Reddit feeds.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>What would you like to hide?</h2>
+      <p class="muted">Nothing is filtered until you choose. Changes save instantly, and you can change them any time from the toolbar button.</p>
+      <ul id="cats" class="cats"></ul>
+    </section>
+
+    <section>
+      <h2>Where should it filter?</h2>
+      <div id="scope"></div>
+    </section>
+
+    <section class="tips">
+      <h2>Good to know</h2>
+      <ul>
+        <li>Hover any post on Reddit and click the small <strong>⊘</strong> button to hide its community, add it to a category, or always show it.</li>
+        <li>Visiting a community directly (for example <code>r/politics</code>) is never filtered.</li>
+        <li>Everything stays in your browser. No account, no tracking, no network requests.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <button id="settings" type="button">All settings</button>
+      <a id="go" class="button primary" href="https://www.reddit.com/r/popular/">Open r/popular</a>
+    </footer>
+    <p class="coffee">Free and open source (GPL-3.0). If it saves you some scrolling, you can <a href="https://buymeacoffee.com/deanyo" target="_blank" rel="noopener noreferrer">buy me a coffee</a>.</p>
+  </main>
+  <script src="welcome.js"></script>
+</body>
+</html>

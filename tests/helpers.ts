@@ -15,3 +15,9 @@ export function cat(partial: Partial<Category> & { id: string }): Category {
 export function config(categories: Category[], extra: Partial<Config> = {}): Config {
   return { ...createDefaultConfig(), categories, allowlist: [], ...extra };
 }
+
+/** Defaults with the given built-in categories switched on (all are off for new installs). */
+export function defaultsWith(...ids: string[]): Config {
+  const def = createDefaultConfig();
+  return { ...def, categories: def.categories.map((c) => (ids.includes(c.id) ? { ...c, enabled: true } : c)) };
+}

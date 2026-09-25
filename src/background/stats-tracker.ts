@@ -20,7 +20,7 @@ let chain: Promise<unknown> = Promise.resolve();
 /** Serialise all updates so concurrent reports from several tabs can't lose counts. */
 function serial<T>(fn: () => Promise<T>): Promise<T> {
   const run = chain.then(fn);
-  chain = run.catch((e) => console.error("[Reddit Feed Curator] stats update failed", e));
+  chain = run.catch((e) => console.error("[Feed Curator for Reddit] stats update failed", e));
   return run;
 }
 

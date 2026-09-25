@@ -1,21 +1,24 @@
-# Reddit Feed Curator (Curddit)
+# Feed Curator for Reddit (Curddit)
+
+<img src="static/icons/icon.svg" alt="" width="64" align="right">
+
 
 A Firefox extension that removes unwanted posts from Reddit feeds by **category**, using exact subreddit names, wildcard name patterns and title keywords. Everything runs locally: there's no Reddit login, API access, backend, analytics or network requests.
 
-It ships with these built-in categories. Only the first and third are on by default; switch the rest on from the popup:
+It ships with ready-made categories, **all off until you pick them**. A welcome page opens on first install so you can choose, and you can change your choices any time from the toolbar popup.
 
-| Category | Default | What it matches |
-|---|---|---|
-| **India-specific communities** | on | 159 India-focused subreddits: regional, city and state communities, Bollywood and other film industries, celebrity gossip, memes, students, finance, lifestyle and gaming. It matches **subreddit identity only**, so an international news post about India in r/worldnews stays visible. |
-| **India: broad name patterns** | off | `India*`, `*India`, `Indian*`, with known false positives excluded (Indiana, Indianapolis, IndianCountry, Indian Motorcycle and others). Review it before switching it on. |
-| **Webcomics** | on | 54 webcomic and comic-strip subreddits (r/comics, r/webcomics, r/xkcd and others), plus phrase-level title keywords such as "comic strip", "webcomic" and "[OC] comic". |
-| **Celebrity gossip** | off | Fauxmoi, popculturechat, royal gossip and similar. It doesn't include fan communities or general entertainment news. |
-| **Reality TV** | off | Real Housewives, Bachelor, 90 Day Fiancé, Love Island and others. |
-| **Snark communities** | off | The pattern `*snark*` plus a list of snark subs without "snark" in the name. Known false positives (e.g. r/SnarkyPuppy, a jazz band) are excluded. |
-| **Streamers & influencer drama** | off | LivestreamFail, youtubedrama and major streamer communities. |
-| **US politics** | off | About 70 US political subreddits from left, right and centre, plus a few general subs that are political in practice (e.g. WhitePeopleTwitter). |
-| **Political headlines** | off | About 50 title keywords (politicians and institutions) that hide political posts in *any* subreddit. It's blunt by design. Ambiguous words like "Harris", "election" and "ICE" are left out. |
-| **Rage bait & freakouts** | off | PublicFreakout, TikTokCringe, fight and "Karen" subs, and similar. |
+| Category | What it matches |
+|---|---|
+| **Celebrity gossip** | Fauxmoi, popculturechat, royal gossip and similar. It doesn't include fan communities or general entertainment news. |
+| **Reality TV** | Real Housewives, Bachelor, 90 Day Fiancé, Love Island and others. |
+| **Snark communities** | The pattern `*snark*` plus a list of snark subs without "snark" in the name. Known false positives (e.g. r/SnarkyPuppy, a jazz band) are excluded. |
+| **Streamers & influencer drama** | LivestreamFail, youtubedrama and major streamer communities. |
+| **US politics** | About 70 US political subreddits from left, right and centre, plus a few general subs that are political in practice (e.g. WhitePeopleTwitter). |
+| **Political headlines** | About 50 title keywords (politicians and institutions) that hide political posts in *any* subreddit. It's blunt by design. Ambiguous words like "Harris", "election" and "ICE" are left out. |
+| **Rage bait & freakouts** | PublicFreakout, TikTokCringe, fight and "Karen" subs, and similar. |
+| **Webcomics** | 54 webcomic and comic-strip subreddits (r/comics, r/webcomics, r/xkcd and others), plus phrase-level title keywords such as "comic strip" and "[OC] comic". |
+| **India-specific communities** | 159 India-focused subreddits: regional, city and state communities, film industries, gossip, memes, students, finance and lifestyle. It matches **subreddit identity only**, so an international news post about India in r/worldnews stays visible. |
+| **India: broad name patterns** | `India*`, `*India`, `Indian*`, with known false positives excluded (Indiana, Indianapolis, IndianCountry, Indian Motorcycle and others). |
 
 Every subreddit name in these lists was checked against subreddit metadata. Dead or banned communities were dropped.
 
@@ -61,8 +64,13 @@ Alternatively, `npm run start:firefox` launches a separate Firefox profile with 
 | `npm test` | Unit and DOM integration tests (Vitest + jsdom) |
 | `npm run lint:ext` | Mozilla's `web-ext lint` on `dist/` |
 | `npm run check` | All of the above |
-| `npm run package` | Build and produce `web-ext-artifacts/reddit-feed-curator-<version>.xpi` |
+| `npm run package` | Build and produce `web-ext-artifacts/feed-curator-for-reddit-<version>.xpi` |
+| `npm run package:source` | Zip the committed source for AMO review (`web-ext-artifacts/feed-curator-for-reddit-source.zip`) |
 | `npm run test:live` | Smoke test against **live reddit.com** in a throwaway headless Firefox (needs network; `HEADFUL=1` to watch) |
+
+### Publishing to addons.mozilla.org
+
+The submission text, reviewer notes and screenshots are in [`docs/amo-listing.md`](docs/amo-listing.md) and [`docs/screenshots/`](docs/screenshots/). Upload the `.xpi` from `npm run package` and the source archive from `npm run package:source`.
 
 ### Distributable package
 
@@ -77,7 +85,7 @@ Alternatively, `npm run start:firefox` launches a separate Firefox profile with 
 
 - **Popup** (toolbar icon): quick toggles and statistics. The counts are real filtering decisions, and each post is counted once per browser session, however often Reddit re-renders it.
 - **In-feed ⊘ button**: hover any post in a feed. "Hide r/X" adds the subreddit to a *Blocked subreddits* category, which is created on first use.
-- **Settings**: from the popup, the ⊘ menu, or `about:addons` → Reddit Feed Curator → Preferences.
+- **Settings**: from the popup, the ⊘ menu, or `about:addons` → Feed Curator for Reddit → Preferences.
 
 ### Rule types
 
@@ -128,14 +136,14 @@ Key decisions:
 
 ## Testing
 
-**Automated (`npm test`, 96 tests):**
+**Automated (`npm test`, 97 tests):**
 - Engine: case-insensitivity, normalisation, exact, wildcard and keyword matching, allowlist precedence, rule-type precedence, conflicting rules across categories, disabled categories, pause expiry, duplicate rules, pathological patterns, and a 20,000-rule performance check.
 - Storage: validation, import error messages, import/export round trips, v0→v1 migration, refusal of configs from newer versions, seed merging that respects user removals and deletions, and config operations.
 - DOM integration (jsdom, markup modelled on live Reddit): matching posts hidden and others visible, separators, ads, sidebar and crosspost handling, infinite-scroll insertion, late-arriving attributes, category disable restoring posts, allowlist, feed scope, client-side navigation, no double counting, and old.reddit.
 - Stats: deduplication across concurrent tab reports, reset behaviour, and bounded tracking.
 
 **Live (`npm run test:live`, and exploratory runs during development, 25 Sep 2026, Firefox 156, logged out):**
-- On `/r/popular` (India geo filter), the extension hid 9 to 16 of about 30 posts, all from India-specific subreddits, and general subreddits stayed visible.
+- With India and Webcomics switched on, on `/r/popular` (India geo filter), the extension hid 9 to 16 of about 30 posts, all from India-specific subreddits, and general subreddits stayed visible.
 - Posts loaded by infinite scroll were filtered as they arrived.
 - The ⊘ button appeared beside Join. "Hide r/X" hid the post immediately.
 - Visiting a blocked subreddit (`/r/TwentiesIndia/`) showed its posts normally.
@@ -163,3 +171,11 @@ Not yet verified live: logged-in Home feed, old.reddit.com (covered only by fixt
 - Statistics count posts hidden in feeds you actually loaded. Session stats reset when Firefox restarts.
 - The ⊘ button appears on hover, so there's no touch or keyboard-only way to reach it yet. Everything it does is also available in settings.
 - An unsigned `.xpi` can't be installed permanently on release Firefox (see *Distributable package*).
+
+## Licence and support
+
+Free and open source under the [GNU General Public License v3.0](LICENSE).
+
+If it saves you some scrolling, you can [buy me a coffee](https://buymeacoffee.com/deanyo).
+
+*Not affiliated with or endorsed by Reddit, Inc.*

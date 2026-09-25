@@ -11,8 +11,13 @@ import { isContentMessage } from "../shared/messages";
 import { loadConfig } from "../storage/config-store";
 import { recordHidden, resetSessionStats } from "./stats-tracker";
 
-browser.runtime.onInstalled.addListener(() => {
-  void loadConfig();
+browser.runtime.onInstalled.addListener((details) => {
+  void loadConfig().then(() => {
+    // First install only (not updates or temporary reloads): let the user pick categories.
+    if (details.reason === "install" && !details.temporary) {
+      void browser.tabs.create({ url: browser.runtime.getURL("welcome/welcome.html") });
+    }
+  });
 });
 
 browser.action.setBadgeBackgroundColor({ color: "#5f6368" }).catch(() => undefined);

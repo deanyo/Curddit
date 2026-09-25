@@ -10,14 +10,11 @@ import { dedupeCaseInsensitive } from "../filtering/normalization";
 import { CURRENT_SCHEMA_VERSION, type Category, type CategoryRules, type Config } from "./schema";
 
 /**
- * Built-in categories, in display order. Only India and Webcomics are on by
- * default; the rest are opt-in. New seeds are added to existing installs
- * (disabled, per their default) by mergeSeedUpdates.
+ * Built-in categories, in display order. All are off for new installs; the
+ * first-run page (welcome/) lets the user pick. New seeds are added to
+ * existing installs (off) by mergeSeedUpdates, without touching existing ones.
  */
 export const SEEDS: readonly SeedCategory[] = [
-  INDIA_SEED,
-  INDIA_PATTERNS_SEED,
-  WEBCOMICS_SEED,
   CELEBRITY_SEED,
   REALITY_TV_SEED,
   SNARK_SEED,
@@ -25,6 +22,9 @@ export const SEEDS: readonly SeedCategory[] = [
   POLITICS_SEED,
   POLITICAL_HEADLINES_SEED,
   RAGEBAIT_SEED,
+  WEBCOMICS_SEED,
+  INDIA_SEED,
+  INDIA_PATTERNS_SEED,
 ];
 
 const RULE_KINDS = ["subreddits", "patterns", "keywords"] as const;

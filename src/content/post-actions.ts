@@ -100,8 +100,8 @@ export class PostActions {
     this.wrap = document.createElement("div");
     this.wrap.className = "wrap";
     this.button = el("button", "btn", "⊘");
-    this.button.title = "Reddit Feed Curator: filter options for this post";
-    this.button.setAttribute("aria-label", "Reddit Feed Curator options for this post");
+    this.button.title = "Feed Curator for Reddit: filter options for this post";
+    this.button.setAttribute("aria-label", "Feed Curator for Reddit options for this post");
     this.menu = el("div", "menu");
     this.menu.setAttribute("role", "menu");
     this.toast = el("div", "toast");

@@ -16,6 +16,7 @@ import { migrate, MigrationError } from "../src/storage/migrations";
 import { CURRENT_SCHEMA_VERSION } from "../src/storage/schema";
 import { parseImport, serializeExport, validateConfig } from "../src/storage/validation";
 import type { SeedCategory } from "../src/data/seed-types";
+import { defaultsWith } from "./helpers";
 
 describe("normalisation", () => {
   it.each([
@@ -38,17 +39,20 @@ describe("default config and seeds", () => {
     expect(r.ok).toBe(true);
     if (r.ok) expect(r.warnings).toEqual([]);
   });
-  it("includes all 25 user-muted India subreddits as exact rules, enabled by default", () => {
+  it("ships every built-in category off, so new installs filter nothing until the user chooses", () => {
+    expect(def.categories.every((c) => !c.enabled)).toBe(true);
+    expect(evaluate({ subreddit: "TeenIndia", title: "a webcomic" }, def).blocked).toBe(false);
+  });
+  it("includes all 25 user-muted India subreddits as exact rules", () => {
+    const def = defaultsWith("india");
     const india = def.categories.find((c) => c.id === "india")!;
-    expect(india.enabled).toBe(true);
     const muted = ["TeenIndia", "SnacksIndia", "TwentiesIndia", "AllindiaStudentUnion", "BollywoodShaadis", "Indianbooks", "TamilNadu", "IndianGaming", "pune", "BollyBlindsNGossip", "FingMemes", "TwoXIndia", "IndiaInvestments", "GadgetsIndia", "kolkata", "IndiaTech", "bangalore", "Kerala", "AajMaineJana", "indiafood", "developersIndia", "bollywood", "Indiangamers", "ZyadaKuchNai", "InstaCelebsGossip"];
     for (const m of muted) expect(evaluate({ subreddit: m, title: "" }, def).blocked, m).toBe(true);
     expect(india.rules.patterns).toEqual([]);
     expect(india.rules.keywords).toEqual([]);
   });
   it("keeps broad India patterns in a separate, disabled category", () => {
-    const pats = def.categories.find((c) => c.id === "india-patterns")!;
-    expect(pats.enabled).toBe(false);
+    const def = defaultsWith("india");
     expect(evaluate({ subreddit: "IndiaSomethingNew", title: "" }, def).blocked).toBe(false);
     const on = { ...def, categories: def.categories.map((c) => (c.id === "india-patterns" ? { ...c, enabled: true } : c)) };
     expect(evaluate({ subreddit: "IndiaSomethingNew", title: "" }, on).blocked).toBe(true);
@@ -57,6 +61,7 @@ describe("default config and seeds", () => {
     }
   });
   it("webcomics blocks comic subs and comic titles but not all images", () => {
+    const def = defaultsWith("webcomics");
     expect(evaluate({ subreddit: "xkcd", title: "" }, def).blocked).toBe(true);
     expect(evaluate({ subreddit: "funny", title: "I made a comic about my cat" }, def).blocked).toBe(true);
     expect(evaluate({ subreddit: "pics", title: "Sunset over the lake", postType: "image" }, def).blocked).toBe(false);
@@ -114,7 +119,7 @@ describe("config operations", () => {
     expect(addRule(c, "india", "subreddits", "r/TEENINDIA")).toBe(c);
   });
   it("quick block creates the category, clears allowlist and enables the category", () => {
-    let c = addToAllowlist(createDefaultConfig(), "funny");
+    let c = addToAllowlist(defaultsWith("webcomics"), "funny");
     c = quickBlock(c, "r/funny");
     expect(c.allowlist).toEqual([]);
     expect(c.categories.find((x) => x.id === QUICK_BLOCK_ID)!.rules.subreddits).toEqual(["funny"]);

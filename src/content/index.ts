@@ -42,4 +42,4 @@ async function init(): Promise<void> {
   addEventListener("pagehide", () => filter.flushReports());
 }
 
-init().catch((e) => console.error("[Reddit Feed Curator] failed to start", e));
+init().catch((e) => console.error("[Feed Curator for Reddit] failed to start", e));
