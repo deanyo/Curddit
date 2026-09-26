@@ -45,6 +45,8 @@ You can add your own categories, such as celebrity gossip, politics or crypto.
 
 **Most people:** install it from **[Firefox Add-ons (AMO)](https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/)**. It updates automatically. Requires Firefox 142 or newer on desktop.
 
+**Chrome, Edge, Brave, Opera, Vivaldi:** a Chrome build is included (see *Chrome and other Chromium browsers* below). A Chrome Web Store listing is in preparation; until then you can load it unpacked.
+
 Found a subreddit that should be in a category, or something it hides by mistake? [Open an issue](https://github.com/deanyo/Curddit/issues).
 
 ## Install from source (for development)
@@ -67,23 +69,39 @@ Temporary add-ons are removed when Firefox quits, but your settings are kept, si
 
 Alternatively, `npm run start:firefox` launches a separate Firefox profile with the extension loaded, and it auto-reloads when `dist/` changes (use `npm run watch` in another terminal).
 
+### Chrome and other Chromium browsers
+
+```sh
+npm run build:chrome   # outputs the unpacked extension to dist-chrome/
+```
+
+Open `chrome://extensions`, switch on **Developer mode**, click **Load unpacked** and pick `dist-chrome/`. After rebuilding, click the reload icon on the extension's card. This works the same way in Edge (`edge://extensions`), Brave and Opera.
+
+The Chrome build uses the same source. Only the manifest differs: a service-worker background, PNG icons and no Firefox-only keys. A one-line alias maps `chrome.*` to `browser.*`.
+
 ## Build, test, package
 
 | Command | What it does |
 |---|---|
-| `npm run build` | Bundle the TypeScript with esbuild into `dist/` |
+| `npm run build` | Bundle the TypeScript with esbuild into `dist/` (Firefox) |
+| `npm run build:chrome` | Same, into `dist-chrome/` (Chrome, Edge, Brave, Opera) |
 | `npm run watch` | Rebuild scripts on change (restart it to pick up HTML, CSS or manifest changes) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm test` | Unit and DOM integration tests (Vitest + jsdom) |
 | `npm run lint:ext` | Mozilla's `web-ext lint` on `dist/` |
 | `npm run check` | All of the above |
 | `npm run package` | Build and produce `web-ext-artifacts/feed-curator-for-reddit-<version>.xpi` |
+| `npm run package:chrome` | Build the Chrome Web Store / Edge Add-ons zip, `web-ext-artifacts/feed-curator-for-reddit-chrome-<version>.zip` |
 | `npm run package:source` | Zip the committed source for AMO review (`web-ext-artifacts/feed-curator-for-reddit-source.zip`) |
-| `npm run test:live` | Smoke test against **live reddit.com** in a throwaway headless Firefox (needs network; `HEADFUL=1` to watch) |
+| `npm run test:live` | Smoke test against **live reddit.com** in a throwaway headless Firefox (needs network; `HEADFUL=1` to watch). `BROWSER=chrome CHROME_PATH=…` tests `dist-chrome/` in Chrome instead |
 
 ### Publishing to addons.mozilla.org
 
 The submission text, reviewer notes and screenshots are in [`docs/amo-listing.md`](docs/amo-listing.md) and [`docs/screenshots/`](docs/screenshots/). Upload the `.xpi` from `npm run package` and the source archive from `npm run package:source`.
+
+### Publishing to the Chrome Web Store / Edge Add-ons
+
+See [`docs/chrome-web-store.md`](docs/chrome-web-store.md), which covers the listing, the privacy-form answers and the promo tile. The privacy policy is [`PRIVACY.md`](PRIVACY.md).
 
 ### Distributable package
 
@@ -162,6 +180,8 @@ Key decisions:
 - Visiting a blocked subreddit (`/r/TwentiesIndia/`) showed its posts normally.
 - The options page and popup rendered with no script errors, and the rule tester, search and import error reporting worked.
 
+**Chrome** (26 Sep 2026, Chrome for Testing 154): the Chrome build passed the same live smoke test. It hid 14 India posts, and the ⊘ quick-block, the service-worker statistics, and the popup, settings and welcome pages all worked with no errors.
+
 Not yet verified live: logged-in Home feed, old.reddit.com (covered only by fixture tests), and Firefox for Android.
 
 ### Manual checklist
@@ -189,6 +209,7 @@ Not yet verified live: logged-in Home feed, old.reddit.com (covered only by fixt
 
 - **Firefox Add-ons listing:** https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/
 - **Bug reports and subreddit suggestions:** https://github.com/deanyo/Curddit/issues
+- **Privacy policy:** [PRIVACY.md](PRIVACY.md)
 - **Buy me a coffee:** https://buymeacoffee.com/deanyo
 
 ## Licence and support

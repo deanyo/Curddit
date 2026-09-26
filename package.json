@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:chrome": "node scripts/build.mjs --target=chrome",
     "watch": "node scripts/build.mjs --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -14,9 +15,10 @@
     "test:live": "node scripts/live-smoke.mjs",
     "lint:ext": "web-ext lint --source-dir dist",
     "package": "npm run build && web-ext build --source-dir dist --artifacts-dir web-ext-artifacts --filename feed-curator-for-reddit-{version}.xpi --overwrite-dest",
+    "package:chrome": "npm run build:chrome && web-ext build --source-dir dist-chrome --artifacts-dir web-ext-artifacts --filename feed-curator-for-reddit-chrome-{version}.zip --overwrite-dest",
+    "package:source": "mkdir -p web-ext-artifacts && git archive --format=zip -o web-ext-artifacts/feed-curator-for-reddit-source.zip HEAD",
     "start:firefox": "web-ext run --source-dir dist --start-url https://www.reddit.com/r/popular/",
-    "check": "npm run typecheck && npm test && npm run build && npm run lint:ext",
-    "package:source": "mkdir -p web-ext-artifacts && git archive --format=zip -o web-ext-artifacts/feed-curator-for-reddit-source.zip HEAD"
+    "check": "npm run typecheck && npm test && npm run build && npm run lint:ext && npm run build:chrome"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^143.0.0",
