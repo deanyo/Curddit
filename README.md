@@ -2,6 +2,12 @@
 
 <img src="static/icons/icon.svg" alt="" width="64" align="right">
 
+[![Get it on Firefox Add-ons](https://img.shields.io/amo/v/feed-curator-for-reddit?label=Firefox%20Add-ons&logo=firefoxbrowser&color=FF7139)](https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/)
+[![Users](https://img.shields.io/amo/users/feed-curator-for-reddit?color=FF7139)](https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/)
+[![Licence: GPL-3.0](https://img.shields.io/badge/licence-GPL--3.0-blue)](LICENSE)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee&logoColor=000)](https://buymeacoffee.com/deanyo)
+
+**[Install from Firefox Add-ons →](https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/)**
 
 A Firefox extension that removes unwanted posts from Reddit feeds by **category**, using exact subreddit names, wildcard name patterns and title keywords. Everything runs locally: there's no Reddit login, API access, backend, analytics or network requests.
 
@@ -35,7 +41,13 @@ You can add your own categories, such as celebrity gossip, politics or crypto.
 - **Dim mode**: instead of hiding matches, fade them and label them with the matching rule. This is handy for checking your rules.
 - Works on the current Reddit desktop site and on **old.reddit.com**.
 
-## Install (temporary, for development)
+## Install
+
+**Most people:** install it from **[Firefox Add-ons (AMO)](https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/)**. It updates automatically. Requires Firefox 142 or newer on desktop.
+
+Found a subreddit that should be in a category, or something it hides by mistake? [Open an issue](https://github.com/deanyo/Curddit/issues).
+
+## Install from source (for development)
 
 Requirements: Firefox 142 or newer, and Node.js 20 or newer.
 
@@ -172,6 +184,12 @@ Not yet verified live: logged-in Home feed, old.reddit.com (covered only by fixt
 - Statistics count posts hidden in feeds you actually loaded. Session stats reset when Firefox restarts.
 - The ⊘ button appears on hover, so there's no touch or keyboard-only way to reach it yet. Everything it does is also available in settings.
 - An unsigned `.xpi` can't be installed permanently on release Firefox (see *Distributable package*).
+
+## Links
+
+- **Firefox Add-ons listing:** https://addons.mozilla.org/firefox/addon/feed-curator-for-reddit/
+- **Bug reports and subreddit suggestions:** https://github.com/deanyo/Curddit/issues
+- **Buy me a coffee:** https://buymeacoffee.com/deanyo
 
 ## Licence and support
 
